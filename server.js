@@ -5,10 +5,10 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Serve i file statici di React
-app.use(express.static(path.join(__dirname, "dist"))); // Assumendo build Vite
+app.use(express.static(path.join(__dirname, "build"))); // Assumendo build Vite
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "index.html"));
+    res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 app.listen(PORT, () => {
