@@ -5,6 +5,7 @@
   "dependencies": {
     "cra-template": "1.2.0",
     "dxf-parser": "^1.1.2",
+    "express": "^4.18.2",
     "raw-loader": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -16,6 +17,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "start:server": "node server.js",
+    "deploy": "npm run build && flyctl deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
