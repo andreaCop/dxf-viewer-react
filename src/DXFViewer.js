@@ -77,14 +77,14 @@ const DXFViewer = ({ dxfContent }) => {
         });
       } else if (entity.type === "CIRCLE") {
         const { x, y } = entity.center;
-        const radius = entity.radius;
+        const {radius} = entity;
         minX = Math.min(minX, x - radius);
         maxX = Math.max(maxX, x + radius);
         minY = Math.min(minY, y - radius);
         maxY = Math.max(maxY, y + radius);
       } else if (entity.type === "ARC") {
         const { x, y } = entity.center;
-        const radius = entity.radius;
+        const {radius} = entity;
         minX = Math.min(minX, x - radius);
         maxX = Math.max(maxX, x + radius);
         minY = Math.min(minY, y - radius);
@@ -134,7 +134,7 @@ const DXFViewer = ({ dxfContent }) => {
 
   const renderCircle = (entity, ctx, scale, marginX, marginY, canvas) => {
     const { x, y } = entity.center;
-    const radius = entity.radius;
+    const {radius} = entity;
     ctx.beginPath();
     ctx.arc(x * scale + marginX, canvas.height - (y * scale + marginY), radius * scale, 0, Math.PI * 2);
     ctx.stroke();
@@ -142,7 +142,7 @@ const DXFViewer = ({ dxfContent }) => {
 
   const renderArc = (entity, ctx, scale, marginX, marginY, canvas) => {
     const { x, y } = entity.center;
-    const radius = entity.radius;
+    const {radius} = entity;
     const startAngle = entity.startAngle * (Math.PI / 180);
     const endAngle = entity.endAngle * (Math.PI / 180);
     ctx.beginPath();
@@ -173,7 +173,9 @@ const DXFViewer = ({ dxfContent }) => {
 
   const renderSpline = (entity, ctx, scale, marginX, marginY, canvas) => {
     const { controlPoints } = entity;
-    if (controlPoints.length < 2) return;
+    if (controlPoints.length < 2) {
+      return;
+    }
 
     ctx.beginPath();
     controlPoints.forEach((point, index) => {
