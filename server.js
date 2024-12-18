@@ -6,10 +6,20 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Configurazione CORS per consentire richieste solo da andreacop.retool.com
-const corsOptions = {
-    origin: 'https://andreacop.retool.com', // Specifica il dominio consentito
-    methods: ['GET', 'POST', 'OPTIONS'], // Metodi consentiti
-    allowedHeaders: ['Content-Type', 'Authorization'], // Intestazioni consentite
+const corsOptions = (req, callback) => {
+    const allowedOrigins = [
+        'https://andreacop.retool.com',
+        'null', // Consente richieste locali o senza origine definita
+    ];
+    const origin = req.header('Origin');
+
+    if (allowedOrigins.includes(origin) || !origin) {
+        // Se l'origine è consentita, aggiungila alle intestazioni
+        callback(null, { origin: true });
+    } else {
+        // Blocca altre origini
+        callback(new Error('Not allowed by CORS'));
+    }
 };
 
 // Applica le impostazioni di CORS globalmente
