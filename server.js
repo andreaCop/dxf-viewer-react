@@ -31,14 +31,13 @@ app.use(express.static(path.join(__dirname, "build"))); // Assumendo build Vite
 
 // Endpoint per caricare il file DXF da un URL
 app.get("/api/load-dxf", async (req, res) => {
-    const fileUrl = req.query.file; // Ottieni il "file" dall'URL
+    const fileUrl = req.query.file;
 
     if (!fileUrl) {
         return res.status(400).json({ error: "Il parametro 'file' è obbligatorio." });
     }
 
     try {
-        // Effettua il fetch del contenuto del file DXF
         const response = await fetch(fileUrl);
         if (!response.ok) {
             throw new Error(`Errore nel recupero del file: ${response.statusText}`);
@@ -46,8 +45,9 @@ app.get("/api/load-dxf", async (req, res) => {
 
         const dxfContent = await response.text();
 
-        // Invia il contenuto come file DXF
-        res.setHeader('Content-Type', 'application/dxf');
+        // Imposta il Content-Disposition per specificare un nome di file con estensione
+        res.setHeader("Content-Type", "application/dxf");
+        res.setHeader("Content-Disposition", 'inline; filename="file.dxf"');
         res.send(dxfContent);
     } catch (error) {
         console.error(error);
