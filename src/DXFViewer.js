@@ -5,6 +5,7 @@ const DXFViewer = ({ dxfContent }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    console.log("Contenuto DXF ricevuto:", dxfContent);
     if (dxfContent) {
       try {
         const parser = new DxfParser();
@@ -28,6 +29,7 @@ const DXFViewer = ({ dxfContent }) => {
 
     canvas.width = 1000;
     canvas.height = 600;
+    ctx.imageSmoothingEnabled = true;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const { minX, maxX, minY, maxY } = getDXFBounds(dxf);
@@ -116,11 +118,11 @@ const DXFViewer = ({ dxfContent }) => {
   };
 
   const getScale = (minX, maxX, minY, maxY, canvasWidth, canvasHeight) => {
-    const width = maxX - minX;
-    const height = maxY - minY;
+    const width = maxX - minX || 1; // Evita divisioni per zero
+    const height = maxY - minY || 1;
     const scaleX = canvasWidth / width;
     const scaleY = canvasHeight / height;
-    return Math.min(scaleX, scaleY);
+    return Math.min(scaleX, scaleY) * 0.9; // Margine di sicurezza del 10%
   };
 
   const renderLine = (entity, ctx, scale, marginX, marginY, canvas) => {

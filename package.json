@@ -7,6 +7,7 @@
     "cra-template": "1.2.0",
     "dxf-parser": "^1.1.2",
     "express": "^4.18.2",
+    "node-fetch": "^2.7.0",
     "raw-loader": "^4.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
